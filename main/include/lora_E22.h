@@ -1,0 +1,158 @@
+#pragma once
+
+enum COMMAND
+{
+    WRITE_CFG_PWR_DWN_SAVE 	= 0xC0,
+	READ_CONFIGURATION 		= 0xC1,
+	WRITE_CFG_PWR_DWN_LOSE 	= 0xC2,
+	WRONG_FORMAT 			= 0xFF,
+	RETURNED_COMMAND 		= 0xC1,
+	SPECIAL_WIFI_CONF_COMMAND = 0xCF
+};
+
+enum REGISTER_ADDR
+{
+    REG_ADDRESS_CFG			= 0x00,
+	REG_ADDRESS_SPED 		= 0x02,
+	REG_ADDRESS_TRANS_MODE 	= 0x03,
+	REG_ADDRESS_CHANNEL 	= 0x04,
+	REG_ADDRESS_OPTION	 	= 0x05,
+	REG_ADDRESS_CRYPT	 	= 0x06,
+	REG_ADDRESS_PID		 	= 0x08
+
+};
+
+enum PACKET_LEN
+{
+    PL_CONFIGURATION 	= 0x08,
+	PL_SPED				= 0x01,
+	PL_OPTION			= 0x01,
+	PL_TRANSMISSION_MODE= 0x01,
+	PL_CHANNEL			= 0x01,
+	PL_CRYPT			= 0x02,
+	PL_PID				= 0x03
+
+};
+
+
+/*
+000: 0.3k
+001: 1.2k
+010: 2.4k（default）
+011: 4.8k
+100: 9.6k
+101: 19.2k
+110: 38.4k
+111: 62.5k
+
+*/
+enum AIR_DATA
+{
+    RATE_300 = 0b000,
+    RATE_1200 = 0b001,
+    RATE_2400 = 0b010,
+    RATE_4800 = 0b011,
+    RATE_9600 = 0b100,
+    RATE_19200 = 0b101,
+    RATE_38400 = 0b110,
+    RATE_62500 = 0b111  
+};
+/*
+UART: Serial port rate（bps）
+000: 1200
+001: 2400
+010: 4800
+011: 9600（default）
+100: 19200
+101: 38400
+110: 57600
+111: 115200
+*/
+enum UART_RATE
+{
+    UART_RATE_1200 = 0b000,
+    UART_RATE_2400 = 0b001,
+    UART_RATE_4800 = 0b010,
+    UART_RATE_9600 = 0b011,
+    UART_RATE_19200 = 0b100,
+    UART_RATE_38400 = 0b101,
+    UART_RATE_57600 = 0b110,
+    UART_RATE_115200 = 0b111  
+};
+
+enum SUB_PACKET_SET
+{
+    SPS_240_00 = 0b00,
+    SPS_128_01 = 0b01,
+	SPS_064_10 = 0b10,
+	SPS_032_11 = 0b11
+};
+
+enum WOR_PERIOD {
+	WOR_500_000 = 0b000,
+	WOR_1000_001 = 0b001,
+	WOR_1500_010 = 0b010,
+	WOR_2000_011 = 0b011,
+	WOR_2500_100 = 0b100,
+	WOR_3000_101 = 0b101,
+	WOR_3500_110 = 0b110,
+	WOR_4000_111 = 0b111
+
+};
+enum RSSI_ENABLE_BYTE {
+	RSSI_ENABLED = 0b1,
+	RSSI_DISABLED = 0b0
+};
+enum LBT_ENABLE_BYTE {
+	LBT_ENABLED = 0b1,
+	LBT_DISABLED = 0b0
+};
+enum FIDEX_TRANSMISSION
+{
+  FT_TRANSPARENT_TRANSMISSION = 0b0,
+  FT_FIXED_TRANSMISSION = 0b1
+};
+
+/*
+Transmitting power
+00：30dbm（default）
+01：27dbm
+10：24dbm
+11：21dbm
+*/
+
+enum TRANSMISSION_POWER
+{
+    POWER_30 = 0b00,
+    POWER_27 = 0b01,
+    POWER_24 = 0b10,
+    POWER_21 = 0b11
+
+};
+
+enum MODE
+{
+    DEEP_SLEEP = 0,
+    WOR ,
+    CONFIG,
+    NORMAL
+
+};
+/*
+
+Serial parity bit
+00：8N1（default）
+01：8O1
+10：8E1
+11：8N1（equal to 00）
+*/
+enum PARITY_BIT
+{
+    PARITY_8N1 = 0b00,
+    PARITY_8ON1 = 0b01,
+    PARITY_8E1 = 0b10,
+    PARITY_8N1_EQUAL = 0b11,
+};
+
+esp_err_t get_information_E22 ();
+void init_uart_lora (void);
