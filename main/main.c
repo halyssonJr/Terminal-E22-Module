@@ -69,7 +69,6 @@ void app_main(void)
 {
     
     init_nvs(); 
-    //init_gps();
     init_console();
     esp_console_register_help_command();
     init_uart_lora();
@@ -82,6 +81,7 @@ void app_main(void)
         if (strlen(line) <= 0 ) 
         { 
             // break;
+            //Tratar comandos vazios...
         }
      
         else if (strlen(line) > 0) 
@@ -94,7 +94,7 @@ void app_main(void)
         esp_err_t err = esp_console_run(line, &ret);
         if (err == ESP_ERR_NOT_FOUND) 
         {
-            printf("Unrecognized command\n");
+            printf("Comando não cadastrado\n");
         } 
         
         else if (err == ESP_ERR_INVALID_ARG) 
@@ -104,19 +104,18 @@ void app_main(void)
         
         else if (err == ESP_OK && ret != ESP_OK) 
         {
-            printf("Command returned non-zero error code: 0x%x (%s)\n", ret, esp_err_to_name(ret));
+            printf("Não retornou um zero: 0x%x (%s)\n", ret, esp_err_to_name(ret));
         } 
         
         else if (err != ESP_OK) 
         {
-            printf("Internal error: %s\n", esp_err_to_name(err));
+            printf("Erro Interno: %s\n", esp_err_to_name(err));
         }
         
         linenoiseFree(line);
         vTaskDelay(1);
     }
-    
-    // ESP_LOGE("ERRO", "Error or end-of-input, terminating console");
+
     esp_console_deinit();
 
 }
